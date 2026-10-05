@@ -1,0 +1,638 @@
+# Portfolio Website — Project Specification
+
+## 1. Project Goal
+
+Build a simple, professional, modern personal portfolio website for **Muhammad Abdullah Rasheed**, an AI graduate and early-career AI Engineer.
+
+The website should be designed primarily for:
+- AI Engineer / AI Developer job applications
+- AI/ML internships and junior roles
+- Python + AI backend roles
+- Freelance/client credibility
+
+The website must feel **clean, light, modern, technical, and professional**.
+
+Do NOT make it look like a generic AI-generated portfolio template.
+
+---
+
+## 2. Tech Stack
+
+### Frontend
+- React
+- Vite
+- JavaScript or TypeScript
+- CSS / Tailwind CSS if useful
+- React Router only if multiple pages are actually needed
+
+### Backend
+- Node.js
+- Express.js
+
+### Development
+- Git
+- Environment variables through `.env`
+- npm
+
+Keep the architecture simple. Do not introduce unnecessary libraries or microservices.
+
+---
+
+## 3. Visual Direction
+
+### Overall Style
+
+Use a **light-colored minimalist design**.
+
+Preferred characteristics:
+- White / off-white background
+- Dark charcoal text
+- One restrained accent color
+- Plenty of whitespace
+- Clean typography
+- Subtle borders
+- Soft shadows
+- Rounded corners, but not excessive
+- Subtle hover transitions
+- Professional spacing
+
+Avoid:
+- Dark mode as the primary design
+- Neon colors
+- Excessive gradients
+- Glowing effects
+- Particle backgrounds
+- Animated 3D objects
+- Excessive glassmorphism
+- Huge decorative AI graphics
+- Overly rounded "startup template" cards
+- Excessive animations
+
+The website should look good even with animations disabled.
+
+### Suggested Color Direction
+
+Use approximately:
+
+- Background: `#FAFAF8` or similar warm white
+- Primary text: `#171717`
+- Secondary text: `#5F6368`
+- Borders: `#E7E5E4`
+- Accent: muted blue / indigo / emerald
+
+Do not use many colors.
+
+---
+
+## 4. Typography
+
+Use a modern, readable sans-serif font.
+
+Good options:
+- Inter
+- Geist
+- Manrope
+
+Use strong hierarchy:
+
+- Large but controlled hero heading
+- Medium section headings
+- Comfortable body text
+- Small metadata text
+
+Avoid oversized headings that consume most of the screen.
+
+---
+
+# 5. Website Structure
+
+Use a single-page portfolio initially.
+
+Sections:
+
+1. Navigation
+2. Hero
+3. About
+4. Skills
+5. Featured Projects
+6. Experience
+7. Education
+8. Contact
+9. Footer
+
+---
+
+# 6. Navigation
+
+Navigation should be simple.
+
+Left:
+**Muhammad Abdullah**
+
+Right:
+- About
+- Skills
+- Projects
+- Experience
+- Contact
+
+Also include a clear **Resume** button.
+
+On mobile:
+- Use a simple hamburger menu.
+
+Navigation should remain clean and unobtrusive.
+
+---
+
+# 7. Hero Section
+
+The hero is the most important section.
+
+Suggested content:
+
+### Name
+
+Muhammad Abdullah Rasheed
+
+### Role
+
+AI Engineer / AI Developer
+
+### Short positioning statement
+
+Builds practical AI systems using Python, LLMs, RAG, agentic AI, backend APIs, and machine learning.
+
+Do not make the description sound exaggerated.
+
+### CTA buttons
+
+Primary:
+**View Projects**
+
+Secondary:
+**Download Resume**
+
+Optional text links:
+- GitHub
+- LinkedIn
+
+### Hero design
+
+Keep it minimal.
+
+Possible layout:
+
+Left:
+- Small availability/status label
+- Large heading
+- Short description
+- CTA buttons
+
+Right:
+- Very subtle technical visual or simple abstract element
+
+Do not use a giant AI illustration.
+
+---
+
+# 8. About Section
+
+Keep this short.
+
+Suggested content direction:
+
+Muhammad Abdullah Rasheed is a BS Artificial Intelligence graduate with hands-on experience building AI-powered applications and working with modern AI development tools.
+
+His experience includes Generative AI, RAG, agentic AI, machine learning, Python backend development, and computer vision.
+
+Focus on practical systems rather than listing every technology.
+
+Do not create a huge biography.
+
+---
+
+# 9. Skills Section
+
+Group skills logically instead of displaying one giant cloud of badges.
+
+### AI / Machine Learning
+- Python
+- NumPy
+- Pandas
+- Scikit-learn
+- Machine Learning
+- Computer Vision
+
+### Generative AI
+- LLMs
+- RAG
+- Embeddings
+- Vector Databases
+- Prompt Engineering
+- AI Agents
+- LangChain
+- CrewAI
+
+### Backend / Development
+- Python
+- FastAPI
+- Django
+- Node.js
+- Express.js
+- REST APIs
+- SQL
+
+### Tools / Infrastructure
+- Git
+- GitHub
+- Docker
+- Linux
+- AWS
+
+Only display technologies that are genuinely supported by the user's actual experience.
+
+---
+
+# 10. Featured Projects
+
+This section should receive strong visual emphasis.
+
+Each project card should contain:
+
+- Project name
+- Short description
+- Problem solved
+- Technologies
+- GitHub link
+- Live demo link if available
+
+Use 3–5 projects.
+
+Potential projects:
+
+## AI Embroidery Digitizer
+
+An AI-powered embroidery digitization system that converts uploaded artwork into machine embroidery files while handling segmentation, stitch planning, and embroidery-specific processing.
+
+Technologies can be filled in from the actual implementation.
+
+---
+
+## Agentic AI Application
+
+Reserve a featured project for the upcoming agentic AI + backend project.
+
+Once built, describe:
+- Problem
+- Agent architecture
+- Tools
+- Backend
+- Database
+- Deployment
+- Results
+
+---
+
+## RAG Application
+
+A production-style Retrieval-Augmented Generation system demonstrating:
+- Document ingestion
+- Chunking
+- Embeddings
+- Vector search
+- Retrieval
+- LLM generation
+- Evaluation
+
+---
+
+## NOVA AI Virtual Assistant
+
+Voice-based AI assistant capable of interacting with the computer through voice commands and performing useful tasks.
+
+Use only technologies that were actually used in the project.
+
+---
+
+## 3D Segmentation / Visualization
+
+Optional project demonstrating experience with:
+- 3D meshes
+- Point clouds
+- Segmentation storage
+- Three.js visualization
+
+Only include this if the implementation and repository can be presented professionally.
+
+---
+
+# 11. Project Card Design
+
+Cards should be clean.
+
+Example structure:
+
+```text
+[Project Category]
+
+Project Name
+
+Short two-line explanation of the problem and solution.
+
+Python · RAG · FastAPI · PostgreSQL
+
+[GitHub ↗] [Live Demo ↗]
+```
+
+Avoid giant screenshots occupying most of the card.
+
+On hover:
+- Slight elevation
+- Border transition
+- Very subtle movement
+
+No dramatic animation.
+
+---
+
+# 12. Experience Section
+
+Present experience as a clean timeline or vertical list.
+
+Each experience entry:
+
+### AI Intern
+Company Name
+Date
+
+3–4 concise bullet points describing actual work.
+
+Focus on:
+- What was built
+- Technologies used
+- Engineering responsibility
+- Results
+
+Avoid meaningless statements such as:
+
+"I learned many things and worked with a passionate team."
+
+---
+
+# 13. Education
+
+Show:
+
+**BS Artificial Intelligence**  
+The Islamia University of Bahawalpur  
+2021–2025
+
+Keep education visually secondary to projects and experience.
+
+---
+
+# 14. Contact Section
+
+Simple and professional.
+
+Heading:
+
+**Let's build something useful.**
+
+Short text:
+
+Open to AI engineering, backend, and AI/ML opportunities.
+
+Display:
+- Email
+- LinkedIn
+- GitHub
+
+Optional contact form:
+
+Fields:
+- Name
+- Email
+- Message
+
+The form should submit to the Node.js/Express backend.
+
+---
+
+# 15. Backend Requirements
+
+Create a small Express backend.
+
+Suggested structure:
+
+```text
+server/
+├── src/
+│   ├── routes/
+│   │   └── contact.js
+│   ├── controllers/
+│   │   └── contactController.js
+│   ├── middleware/
+│   └── app.js
+├── package.json
+└── .env.example
+```
+
+For the first version, the backend only needs to handle the contact form.
+
+Do not create unnecessary APIs.
+
+If email sending is implemented, use environment variables for credentials.
+
+Never hardcode secrets.
+
+---
+
+# 16. Frontend Structure
+
+Suggested structure:
+
+```text
+client/
+├── src/
+│   ├── components/
+│   │   ├── Navbar
+│   │   ├── Hero
+│   │   ├── About
+│   │   ├── Skills
+│   │   ├── Projects
+│   │   ├── Experience
+│   │   ├── Education
+│   │   ├── Contact
+│   │   └── Footer
+│   ├── data/
+│   │   └── portfolio.js
+│   ├── App.jsx
+│   ├── main.jsx
+│   └── index.css
+├── package.json
+└── .env.example
+```
+
+Keep portfolio content in data/config files where practical so it is easy to update.
+
+---
+
+# 17. Responsiveness
+
+The site must work properly on:
+
+- Desktop
+- Laptop
+- Tablet
+- Mobile
+
+Do not simply shrink the desktop layout.
+
+Mobile should have:
+- Proper spacing
+- Readable typography
+- Stacked project cards
+- Functional navigation
+- Large enough buttons
+- No horizontal overflow
+
+---
+
+# 18. Accessibility
+
+Implement basic accessibility:
+
+- Semantic HTML
+- Proper heading hierarchy
+- Alt text for meaningful images
+- Keyboard-accessible buttons and links
+- Visible focus states
+- Good color contrast
+- Form labels
+- Accessible mobile navigation
+
+---
+
+# 19. Performance
+
+Keep the site lightweight.
+
+Avoid:
+- Huge image files
+- Unnecessary JavaScript libraries
+- Heavy animation libraries
+- Autoplay video backgrounds
+- Unnecessary API requests
+
+Use lazy loading for project images if needed.
+
+---
+
+# 20. SEO
+
+Add:
+
+- Page title
+- Meta description
+- Open Graph metadata
+- Proper heading structure
+- Favicon
+- robots.txt
+- sitemap if appropriate
+
+Suggested title:
+
+**Muhammad Abdullah Rasheed — AI Engineer**
+
+Suggested description:
+
+**Portfolio of Muhammad Abdullah Rasheed, an AI Engineer building practical AI, LLM, RAG, agentic AI, and backend systems.**
+
+---
+
+# 21. Code Quality
+
+Important:
+
+- Use reusable React components.
+- Keep components reasonably small.
+- Avoid duplicated code.
+- Use meaningful names.
+- Keep content separate from UI where practical.
+- Do not hardcode secrets.
+- Use `.env.example`.
+- Handle API errors properly.
+- Add loading/error states where appropriate.
+- Keep dependencies minimal.
+
+Do not over-engineer the application.
+
+---
+
+# 22. Content Rules
+
+Do NOT invent:
+
+- Companies
+- Job titles
+- Technologies
+- Project results
+- Metrics
+- Clients
+- Testimonials
+- Certifications
+- Awards
+
+If information is missing, create a clearly marked placeholder or ask for the information.
+
+Accuracy is more important than making the portfolio look impressive.
+
+---
+
+# 23. Animation Rules
+
+Animations should be subtle.
+
+Allowed:
+- Fade-in
+- Small slide-up
+- Hover transitions
+- Smooth scrolling
+- Button transitions
+
+Avoid:
+- Constant movement
+- Parallax everywhere
+- Cursor-following effects
+- Particle systems
+- Excessive scroll animations
+- 3D scenes
+
+The website should still feel polished without animation.
+
+---
+
+# 24. Final Quality Standard
+
+Before considering the website complete, verify:
+
+- [ ] Desktop responsive
+- [ ] Mobile responsive
+- [ ] Navigation works
+- [ ] All links work
+- [ ] Resume download works
+- [ ] GitHub links work
+- [ ] LinkedIn link works
+- [ ] Contact form works
+- [ ] Backend handles errors
+- [ ] No secrets committed
+- [ ] No fake portfolio information
+- [ ] No console errors
+- [ ] No broken images
+- [ ] Good Lighthouse performance
+- [ ] Good accessibility basics
+- [ ] Clean visual hierarchy
+
+The final result should look like the portfolio of a serious early-career AI engineer—not a template demonstrating frontend effects.

@@ -1,84 +1,104 @@
-import { useEffect, useRef, useState } from 'react';
-import { Download, Menu, X } from 'lucide-react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { Menu, X, ArrowUpRight } from 'lucide-react';
 import { portfolio } from '../data/portfolio.js';
-import MagneticLink from './MagneticLink.jsx';
 
-const navigation = [
-  ['Home', '#top'],
-  ['About', '#about'],
-  ['Experience', '#experience'],
-  ['Skills', '#skills'],
-  ['Projects', '#projects'],
-  ['Education', '#education'],
-  ['Contact', '#contact'],
+const links = [
+  ['about', 'About'],
+  ['experience', 'Experience'],
+  ['skills', 'Skills'],
+  ['projects', 'Projects'],
+  ['education', 'Education'],
+  ['contact', 'Contact'],
 ];
 
 export default function Navbar() {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState('top');
+  const [open, setOpen] = useState(false);
+  const [active, setActive] = useState('about');
+  const [scrolled, setScrolled] = useState(false);
   const navRef = useRef(null);
-  const [indicator, setIndicator] = useState({ left: 0, width: 0 });
+  const linkRefs = useRef({});
+  const [underline, setUnderline] = useState({ left: 0, width: 0 });
 
-  useEffect(() => {
-    function onActiveSection(event) { setActiveSection(event.detail); }
-    window.addEventListener('portfolio:active-section', onActiveSection);
-    return () => {
-      window.removeEventListener('portfolio:active-section', onActiveSection);
-    };
-  }, []);
-
-  useEffect(() => {
-    if (menuOpen) return undefined;
+  const moveUnderline = useCallback(() => {
+    const activeLink = linkRefs.current[active];
     const nav = navRef.current;
-    const activeLink = nav?.querySelector(`a[href="#${activeSection}"]`);
-    if (!nav || !activeLink) return undefined;
-    const measure = () => setIndicator({ left: activeLink.offsetLeft, width: activeLink.offsetWidth });
-    measure();
-    window.addEventListener('resize', measure, { passive: true });
-    return () => window.removeEventListener('resize', measure);
-  }, [activeSection, menuOpen]);
+    if (!activeLink || !nav) return;
+    setUnderline({ left: activeLink.offsetLeft, width: activeLink.offsetWidth });
+  }, [active]);
 
   useEffect(() => {
-    if (!menuOpen) return undefined;
-    function closeOnEscape(event) {
-      if (event.key === 'Escape') setMenuOpen(false);
-    }
+    let frame = 0;
+    const updateScroll = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => setScrolled(window.scrollY > 18));
+    };
+    updateScroll();
+    window.addEventListener('scroll', updateScroll, { passive: true });
+    window.addEventListener('resize', moveUnderline);
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener('scroll', updateScroll);
+      window.removeEventListener('resize', moveUnderline);
+    };
+  }, [moveUnderline]);
+
+  useEffect(() => {
+    moveUnderline();
+    if (typeof IntersectionObserver === 'undefined') return undefined;
+    const observer = new IntersectionObserver((entries) => {
+      const visible = entries.filter((entry) => entry.isIntersecting)
+        .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+      if (visible) setActive(visible.target.id);
+    }, { rootMargin: '-22% 0px -62% 0px', threshold: [0, 0.1, 0.3] });
+    links.forEach(([id]) => {
+      const section = document.getElementById(id);
+      if (section) observer.observe(section);
+    });
+    return () => observer.disconnect();
+  }, [moveUnderline]);
+
+  useEffect(() => moveUnderline(), [active, open, moveUnderline]);
+
+  const closeMenu = () => setOpen(false);
+  const resume = portfolio.personal.resumeUrl;
+
+  useEffect(() => {
+    if (!open) return undefined;
+    const closeOnEscape = (event) => {
+      if (event.key === 'Escape') setOpen(false);
+    };
     window.addEventListener('keydown', closeOnEscape);
     return () => window.removeEventListener('keydown', closeOnEscape);
-  }, [menuOpen]);
+  }, [open]);
 
   return (
-    <header className="site-header">
+    <header className={`site-header ${scrolled ? 'is-scrolled' : ''}`}>
       <nav className="nav wrap" aria-label="Main navigation">
-        <a className="brand" href="#top" onClick={() => setMenuOpen(false)}>
-          {portfolio.personal.shortName}<span>.</span>
+        <a className="brand" href="#home" onClick={closeMenu} aria-label={`${portfolio.personal.name}, home`}>
+          <span className="brand-mark">MA</span><span className="brand-name">{portfolio.personal.shortName}</span>
         </a>
         <button
           className="menu-toggle"
           type="button"
-          aria-label={menuOpen ? 'Close navigation menu' : 'Open navigation menu'}
-          aria-expanded={menuOpen}
-          aria-controls="nav-links"
-          onClick={() => setMenuOpen(!menuOpen)}
-        >
-          {menuOpen ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
-        </button>
-        <div className={`nav-links ${menuOpen ? 'is-open' : ''}`} id="nav-links" ref={navRef}>
-          {navigation.map(([label, href]) => (
+          aria-label={open ? 'Close navigation menu' : 'Open navigation menu'}
+          aria-expanded={open}
+          aria-controls="primary-links"
+          onClick={() => setOpen((value) => !value)}
+        >{open ? <X size={20} /> : <Menu size={20} />}</button>
+        <div id="primary-links" ref={navRef} className={`nav-links ${open ? 'is-open' : ''}`}>
+          {links.map(([id, label]) => (
             <a
-              key={label}
-              href={href}
-              className={activeSection === href.slice(1) ? 'is-active' : undefined}
-              aria-current={activeSection === href.slice(1) ? 'location' : undefined}
-              onClick={() => setMenuOpen(false)}
-            >
-              {label}
-            </a>
+              key={id}
+              href={`#${id}`}
+              ref={(node) => { linkRefs.current[id] = node; }}
+              aria-current={active === id ? 'location' : undefined}
+              onClick={closeMenu}
+            >{label}</a>
           ))}
-          <span className="nav-indicator" aria-hidden="true" style={{ left: `${indicator.left}px`, width: `${indicator.width}px` }} />
-          <MagneticLink className="nav-resume" href={portfolio.personal.resumeUrl} download="Muhammad-Abdullah-Rasheed-Resume.pdf">
-            Resume <Download size={14} aria-hidden="true" />
-          </MagneticLink>
+          <span className="nav-underline" aria-hidden="true" style={{ transform: `translateX(${underline.left}px)`, width: underline.width }} />
+          <a className="nav-resume" href={resume} download>
+            Resume <ArrowUpRight size={14} aria-hidden="true" />
+          </a>
         </div>
       </nav>
     </header>

@@ -1,15 +1,16 @@
+import { ArrowUp } from 'lucide-react';
 import { portfolio } from '../data/portfolio.js';
-import Reveal from './Reveal.jsx';
+import useReveal from '../hooks/useReveal.js';
 
 export default function Footer() {
+  const reveal = useReveal();
   return (
-    <Reveal as="footer" variant="fade" className="footer footer-reveal">
+    <footer className="site-footer" ref={reveal} data-reveal="fade">
       <div className="wrap footer-inner">
-        <a className="brand" href="#top">{portfolio.personal.shortName}<span>.</span></a>
-        <p>{portfolio.personal.title} · {portfolio.personal.location}</p>
-        <a href="#top" className="back-top">Back to top ↑</a>
-        <small>© {new Date().getFullYear()} {portfolio.personal.name}</small>
+        <a className="footer-brand" href="#home"><span className="brand-mark">MA</span><strong>{portfolio.personal.name}</strong></a>
+        <span className="footer-title">{portfolio.personal.title}</span>
+        <a className="back-top" href="#home">Back to top <ArrowUp size={14} aria-hidden="true" /></a>
       </div>
-    </Reveal>
+    </footer>
   );
 }

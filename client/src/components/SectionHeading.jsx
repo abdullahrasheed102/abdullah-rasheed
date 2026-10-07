@@ -1,13 +1,14 @@
-import Reveal from './Reveal.jsx';
+import useReveal from '../hooks/useReveal.js';
 
-export default function SectionHeading({ index, eyebrow, title, text }) {
+export default function SectionHeading({ index, label, title, titleLines, subtitle, className = '' }) {
+  const reveal = useReveal();
   return (
-    <div className="section-heading">
-      <Reveal as="span" variant="left" className="section-label">
-        <span>{index}</span> / {eyebrow.toLowerCase()}
-      </Reveal>
-      <Reveal as="h2" delay={80}>{title}</Reveal>
-      {text && <Reveal as="p" delay={150}>{text}</Reveal>}
-    </div>
+    <header className={`section-heading ${className}`}>
+      <p className="section-index" ref={reveal} data-reveal="slide">{index} <span>/</span> {label}</p>
+      <h2 className={titleLines ? 'section-title-lines' : ''}>
+        {titleLines ? titleLines.map((line, lineIndex) => <span className={lineIndex === 1 ? 'heading-emphasis' : ''} key={line} ref={reveal} data-reveal="rise" style={{ '--reveal-delay': `${120 + lineIndex * 120}ms` }}>{line}</span>) : <span ref={reveal} data-reveal="rise" style={{ '--reveal-delay': '120ms' }}>{title}</span>}
+      </h2>
+      {subtitle && <p className="section-subtitle" ref={reveal} data-reveal="rise" style={{ '--reveal-delay': '240ms' }}>{subtitle}</p>}
+    </header>
   );
 }

@@ -1,61 +1,63 @@
 import { useEffect, useRef } from 'react';
+import { Github, Mail } from 'lucide-react';
+import { portfolio } from '../data/portfolio.js';
+import useScrollProgress from '../hooks/useScrollProgress.js';
+import useReducedMotion from '../hooks/useReducedMotion.js';
 
-const sectionIds = ['about', 'skills', 'projects', 'experience', 'education', 'contact'];
+function ScrollProgress() {
+  const progress = useScrollProgress();
+  return <div className="scroll-progress" aria-hidden="true"><span style={{ transform: `scaleX(${progress})` }} /></div>;
+}
 
-export default function ScrollPipeline() {
-  const frameRef = useRef(0);
-  const activeRef = useRef('top');
-  const pipelineRef = useRef(null);
+function CursorTrail() {
+  const dotRef = useRef(null);
+  const ringRef = useRef(null);
+  const reduced = useReducedMotion();
 
   useEffect(() => {
-    function update() {
-      if (frameRef.current) return;
-      frameRef.current = window.requestAnimationFrame(() => {
-        frameRef.current = 0;
-        const root = document.documentElement;
-        const maxScroll = root.scrollHeight - window.innerHeight;
-        const nextProgress = maxScroll > 0 ? Math.min(1, Math.max(0, window.scrollY / maxScroll)) : 0;
-        pipelineRef.current?.style.setProperty('--page-progress', `${nextProgress * 100}%`);
-
-        const marker = window.scrollY + window.innerHeight * 0.3;
-        let activeId = 'top';
-        sectionIds.forEach(id => {
-          const section = document.getElementById(id);
-          if (section && section.getBoundingClientRect().top + window.scrollY <= marker) activeId = id;
-        });
-        if (window.scrollY + window.innerHeight >= root.scrollHeight - 2) activeId = 'contact';
-        document.querySelectorAll('.section.pipeline-active').forEach(section => {
-          if (section.id !== activeId) section.classList.remove('pipeline-active');
-        });
-        document.getElementById(activeId)?.classList.add('pipeline-active');
-        if (activeRef.current !== activeId) {
-          activeRef.current = activeId;
-          window.dispatchEvent(new CustomEvent('portfolio:active-section', { detail: activeId }));
-        }
-
-        const timeline = document.querySelector('.experience-list');
-        if (timeline) {
-          const bounds = timeline.getBoundingClientRect();
-          const amount = bounds.height ? Math.min(1, Math.max(0, (window.innerHeight * 0.72 - bounds.top) / bounds.height)) : 0;
-          timeline.style.setProperty('--timeline-progress', `${amount * 100}%`);
-        }
-      });
-    }
-
-    update();
-    window.addEventListener('scroll', update, { passive: true });
-    window.addEventListener('resize', update, { passive: true });
-    return () => {
-      window.removeEventListener('scroll', update);
-      window.removeEventListener('resize', update);
-      if (frameRef.current) window.cancelAnimationFrame(frameRef.current);
+    if (reduced || typeof window.matchMedia !== 'function'
+      || !window.matchMedia('(pointer: fine)').matches) return undefined;
+    document.body.classList.add('has-custom-cursor');
+    const move = (event) => {
+      const point = `${event.clientX}px, ${event.clientY}px`;
+      dotRef.current?.style.setProperty('--cursor-point', point);
+      ringRef.current?.style.setProperty('--cursor-point', point);
     };
-  }, []);
+    const over = (event) => {
+      if (event.target.closest('a, button, [role="button"]')) document.body.classList.add('cursor-hover');
+    };
+    const out = (event) => {
+      if (event.target.closest('a, button, [role="button"]')) document.body.classList.remove('cursor-hover');
+    };
+    window.addEventListener('pointermove', move, { passive: true });
+    document.addEventListener('pointerover', over);
+    document.addEventListener('pointerout', out);
+    return () => {
+      window.removeEventListener('pointermove', move);
+      document.removeEventListener('pointerover', over);
+      document.removeEventListener('pointerout', out);
+      document.body.classList.remove('has-custom-cursor', 'cursor-hover');
+    };
+  }, [reduced]);
 
   return (
-    <div className="scroll-pipeline" aria-hidden="true" ref={pipelineRef}>
-      <span className="scroll-pipeline-track" />
-      <span className="scroll-pipeline-packet" />
+    <div className="cursor-layer" aria-hidden="true">
+      <span className="cursor-ring" ref={ringRef} />
+      <span className="cursor-dot" ref={dotRef} />
     </div>
+  );
+}
+
+export default function ScrollPipeline() {
+  const { email, github } = portfolio.personal;
+  return (
+    <>
+      <ScrollProgress />
+      <CursorTrail />
+      <aside className="floating-actions" aria-label="Quick contact links">
+        <a href={`mailto:${email}`} aria-label="Email Muhammad Abdullah Rasheed"><Mail size={17} /></a>
+        <a href={github} target="_blank" rel="noreferrer" aria-label="GitHub profile"><Github size={17} /></a>
+      </aside>
+    </>
   );
 }

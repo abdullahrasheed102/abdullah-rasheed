@@ -1,0 +1,11 @@
+/* Inter and Space Mono are loaded in index.html. */
+
+/* Apply Inter as default font */
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+}
+
+/* Monospace font for code/tech elements */
+.font-mono {
+  font-family: 'Space Mono', 'Courier New', monospace;
+}

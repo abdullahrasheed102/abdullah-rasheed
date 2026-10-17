@@ -1,0 +1,6 @@
+{
+  "name": "@n8n/design-system",
+  "version": "2.42.6",
+  "private": true,
+  "description": "Empty stand-in for @n8n/design-system. @n8n/chat ships with the design system pre-bundled, so the real package (and its native isolated-vm build) is never needed at runtime. Wired up via \"overrides\" in client/package.json."
+}

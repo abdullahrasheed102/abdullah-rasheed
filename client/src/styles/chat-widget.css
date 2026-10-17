@@ -1,0 +1,113 @@
+/* n8n chat widget themed with the template's dark neon tokens (theme.css).
+   Variables are declared on html:root so they outrank the widget's own :root defaults whatever
+   the load order; the widget's derived variables resolve at :root, so setting them on a child
+   wouldn't take. Rule overrides below are scoped to #n8n-chat so neither side leaks. */
+html:root {
+  --chat--color--primary: var(--neon-cyan);
+  --chat--color--primary-shade-50: #33f3ff;
+  --chat--color--primary--shade-100: #00d4e0;
+  --chat--color--secondary: var(--neon-cyan);
+  --chat--color-secondary-shade-50: #33f3ff;
+  --chat--color-white: #14141f;
+  --chat--color-light: #0a0a0f;
+  --chat--color-light-shade-50: #1e1e2e;
+  --chat--color-light-shade-100: rgba(255, 255, 255, 0.1);
+  --chat--color-medium: #2a2a3e;
+  --chat--color-dark: #f5f5f7;
+  --chat--color-disabled: #2a2a3e;
+  --chat--color-typing: #9ca3af;
+
+  --chat--font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  --chat--font-family--monospace: 'Space Mono', 'Courier New', monospace;
+  --chat--border-radius: var(--radius);
+  --chat--transition-duration: 0.3s;
+
+  --chat--toggle--size: 56px;
+  --chat--toggle--background: linear-gradient(135deg, var(--neon-cyan), var(--neon-blue));
+  --chat--toggle--hover--background: linear-gradient(135deg, #33f3ff, #1a75ff);
+  --chat--toggle--active--background: linear-gradient(135deg, #00d4e0, #0052cc);
+  --chat--toggle--color: #0a0a0f;
+
+  --chat--window--right: 20px;
+  --chat--window--bottom: 20px;
+  --chat--window--margin-bottom: 12px;
+  --chat--window--width: 380px;
+  /* Fit between the fixed navbar (4rem) and the bubble on short viewports. */
+  --chat--window--height: min(580px, calc(100dvh - var(--chat--window--bottom) - var(--chat--toggle--size) - var(--chat--window--margin-bottom) - 5rem));
+  --chat--window--border: 1px solid var(--glass-border);
+  --chat--window--border-radius: 1rem;
+  --chat--window--z-index: 60;
+
+  --chat--header--padding: 18px 20px;
+  --chat--header--background: linear-gradient(135deg, rgba(0, 240, 255, 0.12), rgba(168, 85, 247, 0.12)), #14141f;
+  --chat--header--color: #f5f5f7;
+  --chat--header--border-bottom: 1px solid var(--glass-border);
+  --chat--heading--font-size: 1.2rem;
+  --chat--subtitle--font-size: 0.85rem;
+  --chat--subtitle--line-height: 1.6;
+
+  --chat--body--background: #0a0a0f;
+  --chat--messages-list--padding: 16px;
+  --chat--message--font-size: 0.925rem;
+  --chat--message--padding: 12px 14px;
+  --chat--message--border-radius: 0.75rem;
+  --chat--message--margin-bottom: 8px;
+  --chat--message--bot--background: rgba(255, 255, 255, 0.05);
+  --chat--message--bot--color: #f5f5f7;
+  --chat--message--bot--border: 1px solid var(--glass-border);
+  --chat--message--user--background: linear-gradient(135deg, var(--neon-cyan), var(--neon-blue));
+  --chat--message--user--color: #0a0a0f;
+  --chat--message--user--border: none;
+  --chat--message--pre--background: rgba(0, 240, 255, 0.08);
+
+  --chat--input--font-size: 0.925rem;
+  --chat--input--background: #14141f;
+  --chat--input--text-color: #f5f5f7;
+  --chat--input--container--background: #14141f;
+  --chat--input--send--button--background: #14141f;
+  --chat--input--send--button--color: var(--neon-cyan);
+  --chat--input--send--button--background-hover: #1e1e2e;
+  --chat--input--send--button--color-hover: #33f3ff;
+  --chat--input--file--button--background: #14141f;
+  --chat--input--file--button--color: var(--neon-cyan);
+  --chat--footer--background: #14141f;
+  --chat--footer--color: #9ca3af;
+  --chat--footer--border-top: 1px solid var(--glass-border);
+
+  --chat--button--border-radius: 0.5rem;
+  --chat--button--color--primary: #0a0a0f;
+  --chat--button--background--primary: var(--neon-cyan);
+  --chat--button--color--primary--hover: #0a0a0f;
+  --chat--button--background--primary--hover: #33f3ff;
+  --chat--close--button--color-hover: var(--neon-cyan);
+}
+
+/* Undo the wrapper's max-height (2 × bottom offset) so the window height above governs. */
+#n8n-chat .chat-window-wrapper { max-height: none; }
+#n8n-chat .chat-window {
+  box-shadow: 0 0 40px rgba(0, 240, 255, 0.12), 0 24px 60px -24px rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
+}
+#n8n-chat .chat-header h1 { font-weight: 700; letter-spacing: -0.01em; }
+#n8n-chat .chat-header p { color: #9ca3af; }
+#n8n-chat .chat-window-toggle { box-shadow: 0 0 30px rgba(0, 240, 255, 0.35); }
+#n8n-chat .chat-window-toggle:hover { box-shadow: 0 0 40px rgba(0, 240, 255, 0.5); }
+#n8n-chat .chat-input textarea::placeholder { color: #9ca3af; opacity: 1; }
+#n8n-chat .chat-message.chat-message-from-user { font-weight: 500; }
+
+/* Phones: smaller bubble tucked into the corner; the open window spans the width below the navbar. */
+@media (max-width: 640px) {
+  html:root {
+    --chat--toggle--size: 52px;
+    --chat--window--right: 14px;
+    --chat--window--bottom: 14px;
+    --chat--window--margin-bottom: 10px;
+    --chat--window--width: calc(100vw - 28px);
+    --chat--window--height: max(280px, calc(100dvh - var(--chat--window--bottom) - var(--chat--toggle--size) - var(--chat--window--margin-bottom) - 4.75rem));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #n8n-chat .chat-window-toggle:hover,
+  #n8n-chat .chat-window-toggle:active { transform: none; }
+}

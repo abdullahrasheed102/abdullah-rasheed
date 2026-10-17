@@ -56,7 +56,7 @@ export function Contact() {
         </motion.div>
 
         {/* Contact methods */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12" data-chat-label-avoid>
           {contactMethods.map((method, index) => {
             const Icon = method.icon;
             return (
@@ -106,6 +106,7 @@ export function Contact() {
         {/* CTA Button */}
         <motion.div
           className="text-center"
+          data-chat-label-avoid
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
